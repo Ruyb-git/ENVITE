@@ -1,0 +1,60 @@
+services:
+  db:
+    container_name: db
+    hostname: db
+    image: postgres:16-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: envite
+      TZ: GMT-3
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+      - ./ddl.sql:/docker-entrypoint-initdb.d/1.sql:ro
+    networks:
+      - datanodes-network
+
+  backend:
+    build:
+        context: ./envite
+        dockerfile: Dockerfile 
+    command: >
+      sh -c "python manage.py migrate &&
+             gunicorn envite.wsgi:application --bind 0.0.0.0:8000"
+    volumes:
+      - ./envite:/app
+    working_dir: /app
+    container_name: backend
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=*
+    networks:
+      - datanodes-network
+  
+  frontend:
+    build:
+      context: ./front
+      dockerfile: Dockerfile
+      args:
+        VITE_API_URL: "http://localhost:8000"
+    container_name: frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    networks:
+      - datanodes-network
+
+volumes:
+  db-data:
+
+networks:
+  datanodes-network:
+    driver: bridge
