@@ -111,18 +111,18 @@ const LoginPage: React.FC = () => {
               <Button type="submit" isLoading={loading} fullWidth>
                 Entrar
               </Button>
-            </div>
 
-            <div className="text-center mt-4">
-              <p className="text-sm  text-white">
-                Ainda não tem uma conta?{" "}
-                <Link
-                  to="/register"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Inscreva-se agora
-                </Link>
-              </p>
+              <div className="text-center pt-2">
+                <p className="text-sm  text-white">
+                  Ainda não tem uma conta?{" "}
+                  <Link
+                    to="/register"
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Inscreva-se agora
+                  </Link>
+                </p>
+              </div>
             </div>
           </form>
         </div>

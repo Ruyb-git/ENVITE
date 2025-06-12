@@ -54,11 +54,11 @@ const Modal: React.FC<ModalProps> = ({
 
       <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
         <div
-          className={`relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 ${sizeClasses[size]} w-full`}
+          className={`relative transform overflow-hidden rounded-lg bg-[#2F2F2F] text-left shadow-xl transition-all sm:my-8 ${sizeClasses[size]} w-full`}
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="bg-white px-4 py-4 sm:px-6 border-b border-gray-200 flex justify-between items-center">
-            <h3 className="text-lg font-medium text-gray-900">{title}</h3>
+          <div className="bg-[#2F2F2F] px-4 py-4 sm:px-6 border-b border-[#1f1f1f] flex justify-between items-center">
+            <h3 className="text-lg font-medium text-white">{title}</h3>
             <button
               type="button"
               className="text-gray-400 hover:text-gray-500 focus:outline-none"
@@ -68,7 +68,7 @@ const Modal: React.FC<ModalProps> = ({
             </button>
           </div>
 
-          <div className="bg-white px-4 py-5 sm:p-6">{children}</div>
+          <div className="bg-[#2F2F2F] px-4 py-5 sm:p-6">{children}</div>
         </div>
       </div>
     </div>

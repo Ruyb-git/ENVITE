@@ -161,18 +161,18 @@ const RegisterPage: React.FC = () => {
               <Button type="submit" isLoading={loading} fullWidth>
                 Registrar
               </Button>
-            </div>
 
-            <div className="text-center mt-4">
-              <p className="text-sm text-white">
-                Já tem uma conta?{" "}
-                <Link
-                  to="/login"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Iniciar sessão
-                </Link>
-              </p>
+              <div className="text-center pt-2">
+                <p className="text-sm text-white">
+                  Já tem uma conta?{" "}
+                  <Link
+                    to="/login"
+                    className="font-medium text-indigo-600 hover:text-indigo-500"
+                  >
+                    Iniciar sessão
+                  </Link>
+                </p>
+              </div>
             </div>
           </form>
         </div>

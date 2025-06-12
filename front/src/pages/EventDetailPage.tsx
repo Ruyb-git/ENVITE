@@ -138,11 +138,11 @@ const EventDetailPage: React.FC = () => {
   if (!event) {
     return (
       <MainLayout>
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
+        <div className="bg-[#2F2F2F] rounded-lg shadow-md p-8 text-center">
           <h3 className="text-lg font-medium text-gray-900 mb-2">
-            Event not found
+            Evento não encontrado
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-400 mb-4">
             O evento que procura não existe ou foi removido.
           </p>
           <Button onClick={() => navigate("/")}>Voltar para Eventos</Button>
@@ -155,7 +155,7 @@ const EventDetailPage: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className="bg-white rounded-lg shadow-md overflow-hidden">
+      <div className="bg-[#2F2F2F] rounded-lg shadow-md overflow-hidden">
         {/* Banner */}
         <div className="relative h-64 sm:h-80 md:h-96 bg-gray-200">
           {event.banners && event.banners.length > 0 ? (
@@ -227,65 +227,63 @@ const EventDetailPage: React.FC = () => {
           <div className="flex flex-wrap gap-2 mb-6">
             {event.is_my_event && (
               <span className="bg-indigo-100 text-indigo-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                You created this event
+                Criou este evento
               </span>
             )}
             {event.i_will_join && (
               <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                You're participating
+                Está participando
               </span>
             )}
             {event.ticket_price ? (
               <span className="bg-amber-100 text-amber-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                Paid: ${event.ticket_price}
+                Pago: ${event.ticket_price}
               </span>
             ) : (
               <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                Free
+                Grátis
               </span>
             )}
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">
-                About this event
+              <h2 className="text-xl font-semibold text-white mb-4">
+                Sobre este evento
               </h2>
-              <p className="text-gray-700 mb-6 whitespace-pre-line">
+              <p className="text-gray-400 mb-6 whitespace-pre-line">
                 {event.description}
               </p>
 
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                Event Details
+              <h3 className="text-lg font-semibold text-white mb-2">
+                Detalhes do Evento
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 mb-6">
-                <div className="flex items-center text-gray-600">
+                <div className="flex items-center text-gray-400">
                   <Calendar className="h-5 w-5 text-gray-500 mr-2" />
                   <span>{formattedDate}</span>
                 </div>
-                <div className="flex items-center text-gray-600">
+                <div className="flex items-center text-gray-400">
                   <Clock className="h-5 w-5 text-gray-500 mr-2" />
                   <span>{event.event_time}</span>
                 </div>
-                <div className="flex items-center text-gray-600">
+                <div className="flex items-center text-gray-400">
                   <Phone className="h-5 w-5 text-gray-500 mr-2" />
                   <span>{event.phone}</span>
                 </div>
-                <div className="flex items-center text-gray-600">
+                <div className="flex items-center text-gray-400">
                   <Users className="h-5 w-5 text-gray-500 mr-2" />
-                  <span>{event.participants.length} participants</span>
+                  <span>{event.participants.length} participantes</span>
                 </div>
                 {event.ticket_price && (
-                  <div className="flex items-center text-gray-600">
+                  <div className="flex items-center text-gray-400">
                     <Tag className="h-5 w-5 text-gray-500 mr-2" />
-                    <span>Ticket price: ${event.ticket_price}</span>
+                    <span>Preço: ${event.ticket_price}</span>
                   </div>
                 )}
               </div>
 
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                Location
-              </h3>
+              <h3 className="text-lg font-semibold text-white mb-2">Local</h3>
               <div className="h-64 rounded-lg overflow-hidden mb-6">
                 <MapContainer
                   center={[event.latitude, event.longitude]}
@@ -302,9 +300,9 @@ const EventDetailPage: React.FC = () => {
             </div>
 
             <div className="md:col-span-1">
-              <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                  Event Host
+              <div className="bg-[#434343] p-4 rounded-lg shadow-sm">
+                <h3 className="text-lg font-semibold text-white mb-4">
+                  Criador do evento
                 </h3>
                 <div className="flex items-center mb-4">
                   {event.owner.avatar ? (
@@ -319,9 +317,7 @@ const EventDetailPage: React.FC = () => {
                     </div>
                   )}
                   <div>
-                    <p className="font-medium text-gray-800">
-                      {event.owner.name}
-                    </p>
+                    <p className="font-medium text-white">{event.owner.name}</p>
                     <p className="text-sm text-gray-500">
                       @{event.owner.username}
                     </p>
@@ -329,7 +325,7 @@ const EventDetailPage: React.FC = () => {
                 </div>
 
                 {event.owner.bio && (
-                  <p className="text-sm text-gray-600 mb-4">
+                  <p className="text-sm text-gray-400 mb-4">
                     {event.owner.bio}
                   </p>
                 )}
@@ -343,7 +339,7 @@ const EventDetailPage: React.FC = () => {
                         className="flex items-center justify-center"
                       >
                         <Edit size={16} className="mr-2" />
-                        Edit Event
+                        Editar evento
                       </Button>
                       <Button
                         variant="danger"
@@ -352,7 +348,7 @@ const EventDetailPage: React.FC = () => {
                         className="flex items-center justify-center"
                       >
                         <Trash size={16} className="mr-2" />
-                        Delete Event
+                        Eliminar Evento
                       </Button>
                     </div>
                   ) : (
@@ -366,12 +362,12 @@ const EventDetailPage: React.FC = () => {
                       {event.i_will_join ? (
                         <>
                           <LogOut size={16} className="mr-2" />
-                          Leave Event
+                          Sair do evento
                         </>
                       ) : (
                         <>
                           <LogIn size={16} className="mr-2" />
-                          Join Event
+                          Participe do Evento
                         </>
                       )}
                     </Button>
@@ -380,9 +376,9 @@ const EventDetailPage: React.FC = () => {
               </div>
 
               {event.participants.length > 0 && (
-                <div className="mt-6 bg-gray-50 p-4 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
-                    Participants
+                <div className="mt-6 bg-[#434343] p-4 rounded-lg shadow-sm">
+                  <h3 className="text-lg font-semibold text-white mb-4">
+                    Participantes
                   </h3>
                   <div className="space-y-3">
                     {event.participants.map((participant) => (
@@ -401,7 +397,7 @@ const EventDetailPage: React.FC = () => {
                             {participant.name.charAt(0).toUpperCase()}
                           </div>
                         )}
-                        <span className="text-sm text-gray-700">
+                        <span className="text-sm text-gray-400">
                           {participant.name}
                         </span>
                       </div>
@@ -436,7 +432,7 @@ const EventDetailPage: React.FC = () => {
         size="sm"
       >
         <div>
-          <p className="text-gray-700 mb-4">
+          <p className="text-gray-400 mb-4">
             Tem a certeza de que deseja eliminar esta zona? Esta ação não pode
             ser revertida.
           </p>

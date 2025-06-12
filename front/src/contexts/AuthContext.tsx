@@ -68,9 +68,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       setUser(userResponse.data);
 
       navigate("/");
-      toast.success("Login successful!");
+      toast.success("Login bem-sucedido");
     } catch (error) {
-      toast.error("Login failed. Please check your credentials.");
+      toast.error("Login falhou. Verifique as suas credenciais.");
       throw error;
     } finally {
       setLoading(false);
@@ -85,9 +85,9 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       localStorage.removeItem("refreshToken");
       setUser(null);
       navigate("/login");
-      toast.success("Logged out successfully");
+      toast.success("Você saiu");
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error("Erro ao sair:", error);
     } finally {
       setLoading(false);
     }
