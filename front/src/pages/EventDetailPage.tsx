@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { 
-  Calendar, 
-  Clock, 
-  MapPin, 
-  Phone, 
-  Tag, 
-  Users, 
-  Edit, 
-  Trash, 
-  LogIn, 
-  LogOut 
-} from 'lucide-react';
-import MainLayout from '../components/Layout/MainLayout';
-import Button from '../components/ui/Button';
-import Modal from '../components/ui/Modal';
-import EventForm from '../components/EventForm';
-import api from '../utils/api';
-import { Event } from '../types';
-import { format } from 'date-fns';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
-import toast from 'react-hot-toast';
-import 'leaflet/dist/leaflet.css';
+import React, { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Phone,
+  Tag,
+  Users,
+  Edit,
+  Trash,
+  LogIn,
+  LogOut,
+} from "lucide-react";
+import MainLayout from "../components/Layout/MainLayout";
+import Button from "../components/ui/Button";
+import Modal from "../components/ui/Modal";
+import EventForm from "../components/EventForm";
+import api from "../utils/api";
+import { Event } from "../types";
+import { format } from "date-fns";
+import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import toast from "react-hot-toast";
+import "leaflet/dist/leaflet.css";
 
 const EventDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -40,9 +40,9 @@ const EventDetailPage: React.FC = () => {
       const response = await api.get<Event>(`/api/v1/events/${id}/`);
       setEvent(response.data);
     } catch (error) {
-      console.error('Error fetching event:', error);
-      toast.error('Failed to load event details');
-      navigate('/');
+      console.error("Ocorreu um erro ao obter o evento:", error);
+      toast.error("Falha ao carregar detalhes do evento");
+      navigate("/");
     } finally {
       setLoading(false);
     }
@@ -56,20 +56,20 @@ const EventDetailPage: React.FC = () => {
 
   const handleUpdateEvent = async (formData: FormData) => {
     if (!id) return;
-    
+
     try {
       setFormLoading(true);
       await api.patch(`/api/v1/events/${id}/`, formData, {
         headers: {
-          'Content-Type': 'multipart/form-data',
+          "Content-Type": "multipart/form-data",
         },
       });
-      toast.success('Event updated successfully!');
+      toast.success("Evento atualizado com sucesso.!");
       setIsEditModalOpen(false);
       fetchEvent();
     } catch (error) {
-      console.error('Error updating event:', error);
-      toast.error('Failed to update event');
+      console.error("Erro ao atualizar o evento", error);
+      toast.error("Falha ao atualizar evento");
     } finally {
       setFormLoading(false);
     }
@@ -77,33 +77,33 @@ const EventDetailPage: React.FC = () => {
 
   const handleDeleteEvent = async () => {
     if (!id) return;
-    
+
     try {
       await api.delete(`/api/v1/events/${id}/`);
-      toast.success('Event deleted successfully!');
-      navigate('/');
+      toast.success('"Evento deletado com sucesso"; ::!');
+      navigate("/");
     } catch (error) {
-      console.error('Error deleting event:', error);
-      toast.error('Failed to delete event');
+      console.error("Erro ao eliminar evento:", error);
+      toast.error("Falha ao eliminar.t");
     }
   };
 
   const handleJoinLeaveEvent = async () => {
     if (!id || !event) return;
-    
+
     try {
       setJoinLeaveLoading(true);
       if (event.i_will_join) {
         await api.post(`/api/v1/events/${id}/leave/`);
-        toast.success('You have left the event');
+        toast.success("Saiu do evento");
       } else {
         await api.post(`/api/v1/events/${id}/join/`);
-        toast.success('You have joined the event');
+        toast.success("Juntou-se ao evento");
       }
       fetchEvent();
     } catch (error) {
-      console.error('Error joining/leaving event:', error);
-      toast.error('Failed to update participation status');
+      console.error("Error joining/leaving event:", error);
+      toast.error("Falha ao atualizar o estado de participação");
     } finally {
       setJoinLeaveLoading(false);
     }
@@ -139,15 +139,19 @@ const EventDetailPage: React.FC = () => {
     return (
       <MainLayout>
         <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <h3 className="text-lg font-medium text-gray-900 mb-2">Event not found</h3>
-          <p className="text-gray-600 mb-4">The event you're looking for doesn't exist or has been removed.</p>
-          <Button onClick={() => navigate('/')}>Back to Events</Button>
+          <h3 className="text-lg font-medium text-gray-900 mb-2">
+            Event not found
+          </h3>
+          <p className="text-gray-600 mb-4">
+            O evento que procura não existe ou foi removido.
+          </p>
+          <Button onClick={() => navigate("/")}>Voltar para Eventos</Button>
         </div>
       </MainLayout>
     );
   }
 
-  const formattedDate = format(new Date(event.event_date), 'PPP');
+  const formattedDate = format(new Date(event.event_date), "PPP");
 
   return (
     <MainLayout>
@@ -156,42 +160,68 @@ const EventDetailPage: React.FC = () => {
         <div className="relative h-64 sm:h-80 md:h-96 bg-gray-200">
           {event.banners && event.banners.length > 0 ? (
             <>
-              <img 
-                src={event.banners[bannerIndex].image} 
-                alt={event.title} 
+              <img
+                src={event.banners[bannerIndex].image}
+                alt={event.title}
                 className="w-full h-full object-cover"
               />
               {event.banners.length > 1 && (
                 <div className="absolute inset-0 flex items-center justify-between">
-                  <button 
+                  <button
                     onClick={prevBanner}
                     className="bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 rounded-full m-4 transition-all"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
                     </svg>
                   </button>
-                  <button 
+                  <button
                     onClick={nextBanner}
                     className="bg-black bg-opacity-30 hover:bg-opacity-50 text-white p-2 rounded-full m-4 transition-all"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
                     </svg>
                   </button>
                 </div>
               )}
               <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent text-white p-4">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">{event.title}</h1>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+                  {event.title}
+                </h1>
               </div>
             </>
           ) : (
             <div className="w-full h-full bg-gradient-to-r from-indigo-500 to-purple-600 flex items-center justify-center">
-              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">{event.title}</h1>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white">
+                {event.title}
+              </h1>
             </div>
           )}
         </div>
-        
+
         {/* Content */}
         <div className="p-4 md:p-6 lg:p-8">
           <div className="flex flex-wrap gap-2 mb-6">
@@ -215,13 +245,19 @@ const EventDetailPage: React.FC = () => {
               </span>
             )}
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
-              <h2 className="text-xl font-semibold text-gray-800 mb-4">About this event</h2>
-              <p className="text-gray-700 mb-6 whitespace-pre-line">{event.description}</p>
-              
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Event Details</h3>
+              <h2 className="text-xl font-semibold text-gray-800 mb-4">
+                About this event
+              </h2>
+              <p className="text-gray-700 mb-6 whitespace-pre-line">
+                {event.description}
+              </p>
+
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                Event Details
+              </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 mb-6">
                 <div className="flex items-center text-gray-600">
                   <Calendar className="h-5 w-5 text-gray-500 mr-2" />
@@ -246,13 +282,15 @@ const EventDetailPage: React.FC = () => {
                   </div>
                 )}
               </div>
-              
-              <h3 className="text-lg font-semibold text-gray-800 mb-2">Location</h3>
+
+              <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                Location
+              </h3>
               <div className="h-64 rounded-lg overflow-hidden mb-6">
                 <MapContainer
                   center={[event.latitude, event.longitude]}
                   zoom={13}
-                  style={{ height: '100%', width: '100%' }}
+                  style={{ height: "100%", width: "100%" }}
                 >
                   <TileLayer
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -262,15 +300,17 @@ const EventDetailPage: React.FC = () => {
                 </MapContainer>
               </div>
             </div>
-            
+
             <div className="md:col-span-1">
               <div className="bg-gray-50 p-4 rounded-lg shadow-sm">
-                <h3 className="text-lg font-semibold text-gray-800 mb-4">Event Host</h3>
+                <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                  Event Host
+                </h3>
                 <div className="flex items-center mb-4">
                   {event.owner.avatar ? (
-                    <img 
-                      src={event.owner.avatar} 
-                      alt={event.owner.name} 
+                    <img
+                      src={event.owner.avatar}
+                      alt={event.owner.name}
                       className="h-10 w-10 rounded-full mr-2"
                     />
                   ) : (
@@ -279,29 +319,35 @@ const EventDetailPage: React.FC = () => {
                     </div>
                   )}
                   <div>
-                    <p className="font-medium text-gray-800">{event.owner.name}</p>
-                    <p className="text-sm text-gray-500">@{event.owner.username}</p>
+                    <p className="font-medium text-gray-800">
+                      {event.owner.name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      @{event.owner.username}
+                    </p>
                   </div>
                 </div>
-                
+
                 {event.owner.bio && (
-                  <p className="text-sm text-gray-600 mb-4">{event.owner.bio}</p>
+                  <p className="text-sm text-gray-600 mb-4">
+                    {event.owner.bio}
+                  </p>
                 )}
-                
+
                 <div className="mt-6">
                   {event.is_my_event ? (
                     <div className="space-y-2">
-                      <Button 
-                        onClick={() => setIsEditModalOpen(true)} 
+                      <Button
+                        onClick={() => setIsEditModalOpen(true)}
                         fullWidth
                         className="flex items-center justify-center"
                       >
                         <Edit size={16} className="mr-2" />
                         Edit Event
                       </Button>
-                      <Button 
-                        variant="danger" 
-                        onClick={() => setIsDeleteModalOpen(true)} 
+                      <Button
+                        variant="danger"
+                        onClick={() => setIsDeleteModalOpen(true)}
                         fullWidth
                         className="flex items-center justify-center"
                       >
@@ -310,9 +356,9 @@ const EventDetailPage: React.FC = () => {
                       </Button>
                     </div>
                   ) : (
-                    <Button 
-                      onClick={handleJoinLeaveEvent} 
-                      variant={event.i_will_join ? 'outline' : 'primary'}
+                    <Button
+                      onClick={handleJoinLeaveEvent}
+                      variant={event.i_will_join ? "outline" : "primary"}
                       isLoading={joinLeaveLoading}
                       fullWidth
                       className="flex items-center justify-center"
@@ -332,17 +378,22 @@ const EventDetailPage: React.FC = () => {
                   )}
                 </div>
               </div>
-              
+
               {event.participants.length > 0 && (
                 <div className="mt-6 bg-gray-50 p-4 rounded-lg shadow-sm">
-                  <h3 className="text-lg font-semibold text-gray-800 mb-4">Participants</h3>
+                  <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                    Participants
+                  </h3>
                   <div className="space-y-3">
                     {event.participants.map((participant) => (
-                      <div key={participant.username} className="flex items-center">
+                      <div
+                        key={participant.username}
+                        className="flex items-center"
+                      >
                         {participant.avatar ? (
-                          <img 
-                            src={participant.avatar} 
-                            alt={participant.name} 
+                          <img
+                            src={participant.avatar}
+                            alt={participant.name}
                             className="h-8 w-8 rounded-full mr-2"
                           />
                         ) : (
@@ -350,7 +401,9 @@ const EventDetailPage: React.FC = () => {
                             {participant.name.charAt(0).toUpperCase()}
                           </div>
                         )}
-                        <span className="text-sm text-gray-700">{participant.name}</span>
+                        <span className="text-sm text-gray-700">
+                          {participant.name}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -360,44 +413,42 @@ const EventDetailPage: React.FC = () => {
           </div>
         </div>
       </div>
-      
-      {/* Edit Modal */}
+
+      {/* Editar Modal */}
       <Modal
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
-        title="Edit Event"
+        title="Editar evento"
         size="lg"
       >
-        <EventForm 
-          onSubmit={handleUpdateEvent} 
-          initialData={event} 
+        <EventForm
+          onSubmit={handleUpdateEvent}
+          initialData={event}
           isLoading={formLoading}
         />
       </Modal>
-      
-      {/* Delete Confirmation Modal */}
+
+      {/* Excluir Modal de Confirmação */}
       <Modal
         isOpen={isDeleteModalOpen}
         onClose={() => setIsDeleteModalOpen(false)}
-        title="Delete Event"
+        title="Eliminar Evento"
         size="sm"
       >
         <div>
           <p className="text-gray-700 mb-4">
-            Are you sure you want to delete this event? This action cannot be undone.
+            Tem a certeza de que deseja eliminar esta zona? Esta ação não pode
+            ser revertida.
           </p>
           <div className="flex justify-end space-x-3">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               onClick={() => setIsDeleteModalOpen(false)}
             >
-              Cancel
+              Cancelar
             </Button>
-            <Button 
-              variant="danger" 
-              onClick={handleDeleteEvent}
-            >
-              Delete Event
+            <Button variant="danger" onClick={handleDeleteEvent}>
+              Eliminar Evento
             </Button>
           </div>
         </div>

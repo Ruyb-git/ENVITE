@@ -19,13 +19,13 @@ services:
 
   backend:
     build:
-        context: ./envite
-        dockerfile: Dockerfile 
+      context: ./back
+      dockerfile: Dockerfile
     command: >
       sh -c "python manage.py migrate &&
              gunicorn envite.wsgi:application --bind 0.0.0.0:8000"
     volumes:
-      - ./envite:/app
+      - ./back:/app
     working_dir: /app
     container_name: backend
     ports:
@@ -37,7 +37,7 @@ services:
       - DJANGO_ALLOWED_HOSTS=*
     networks:
       - datanodes-network
-  
+
   frontend:
     build:
       context: ./front

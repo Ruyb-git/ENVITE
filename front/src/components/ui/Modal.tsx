@@ -1,12 +1,12 @@
-import React, { ReactNode, useEffect } from 'react';
-import { X } from 'lucide-react';
+import React, { ReactNode, useEffect } from "react";
+import { X } from "lucide-react";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   title: string;
   children: ReactNode;
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  size?: "sm" | "md" | "lg" | "xl";
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -14,63 +14,61 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   title,
   children,
-  size = 'md',
+  size = "md",
 }) => {
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
+      if (e.key === "Escape" && isOpen) {
         onClose();
       }
     };
 
-    document.addEventListener('keydown', handleEscape);
-    
-    // Prevent scrolling when modal is open
+    document.addEventListener("keydown", handleEscape);
+
+    // Impedir a rolagem quando o modal estiver aberto
     if (isOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = "hidden";
     }
-    
+
     return () => {
-      document.removeEventListener('keydown', handleEscape);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener("keydown", handleEscape);
+      document.body.style.overflow = "unset";
     };
   }, [isOpen, onClose]);
 
   if (!isOpen) return null;
 
   const sizeClasses = {
-    sm: 'max-w-md',
-    md: 'max-w-lg',
-    lg: 'max-w-2xl',
-    xl: 'max-w-4xl',
+    sm: "max-w-md",
+    md: "max-w-lg",
+    lg: "max-w-2xl",
+    xl: "max-w-4xl",
   };
 
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div 
+      <div
         className="fixed inset-0 bg-black bg-opacity-40 transition-opacity"
         onClick={onClose}
       />
-      
+
       <div className="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
-        <div 
+        <div
           className={`relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 ${sizeClasses[size]} w-full`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="bg-white px-4 py-4 sm:px-6 border-b border-gray-200 flex justify-between items-center">
             <h3 className="text-lg font-medium text-gray-900">{title}</h3>
-            <button 
-              type="button" 
+            <button
+              type="button"
               className="text-gray-400 hover:text-gray-500 focus:outline-none"
               onClick={onClose}
             >
               <X size={20} />
             </button>
           </div>
-          
-          <div className="bg-white px-4 py-5 sm:p-6">
-            {children}
-          </div>
+
+          <div className="bg-white px-4 py-5 sm:p-6">{children}</div>
         </div>
       </div>
     </div>

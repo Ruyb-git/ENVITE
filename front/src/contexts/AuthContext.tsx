@@ -1,16 +1,22 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
-import api from '../utils/api';
-import { AuthContextType, LoginFormData, User } from '../types';
-import { jwtDecode } from 'jwt-decode';
-import toast from 'react-hot-toast';
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+import { useNavigate } from "react-router-dom";
+import api from "../utils/api";
+import { AuthContextType, LoginFormData, User } from "../types";
+import { jwtDecode } from "jwt-decode";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
 };
@@ -26,45 +32,45 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      const token = localStorage.getItem('accessToken');
-      
+      const token = localStorage.getItem("accessToken");
+
       if (token) {
         try {
           // Verify token is valid
-          await api.post('/api/v1/user/auth/token/verify/', { token });
-          
+          await api.post("/api/v1/user/auth/token/verify/", { token });
+
           // Get user data
-          const response = await api.get('/api/v1/user/me/');
+          const response = await api.get("/api/v1/user/me/");
           setUser(response.data);
         } catch (error) {
-          localStorage.removeItem('accessToken');
-          localStorage.removeItem('refreshToken');
+          localStorage.removeItem("accessToken");
+          localStorage.removeItem("refreshToken");
         }
       }
-      
+
       setLoading(false);
     };
-    
+
     checkAuthStatus();
   }, []);
 
   const login = async (data: LoginFormData) => {
     try {
       setLoading(true);
-      const response = await api.post('/api/v1/user/auth/login/', data);
+      const response = await api.post("/api/v1/user/auth/login/", data);
       const { access, refresh, user } = response.data;
-      
-      localStorage.setItem('accessToken', access);
-      localStorage.setItem('refreshToken', refresh);
-      
+
+      localStorage.setItem("accessToken", access);
+      localStorage.setItem("refreshToken", refresh);
+
       // Get more detailed user info
-      const userResponse = await api.get('/api/v1/user/me/');
+      const userResponse = await api.get("/api/v1/user/me/");
       setUser(userResponse.data);
-      
-      navigate('/');
-      toast.success('Login successful!');
+
+      navigate("/");
+      toast.success("Login successful!");
     } catch (error) {
-      toast.error('Login failed. Please check your credentials.');
+      toast.error("Login failed. Please check your credentials.");
       throw error;
     } finally {
       setLoading(false);
@@ -74,14 +80,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     try {
       setLoading(true);
-      await api.post('/api/v1/user/auth/logout/');
-      localStorage.removeItem('accessToken');
-      localStorage.removeItem('refreshToken');
+      await api.post("/api/v1/user/auth/logout/");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
       setUser(null);
-      navigate('/login');
-      toast.success('Logged out successfully');
+      navigate("/login");
+      toast.success("Logged out successfully");
     } catch (error) {
-      console.error('Logout error:', error);
+      console.error("Logout error:", error);
     } finally {
       setLoading(false);
     }
@@ -94,14 +100,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const isAuthenticated = !!user;
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        user, 
-        loading, 
-        login, 
-        logout, 
+    <AuthContext.Provider
+      value={{
+        user,
+        loading,
+        login,
+        logout,
         isAuthenticated,
-        updateUserProfile 
+        updateUserProfile,
       }}
     >
       {children}

@@ -12,10 +12,17 @@ RUN npm install
 COPY . .
 RUN npm run build
 
+# Stage 2: serve com nginx
 FROM nginx:alpine
 
+# Copia o app compilado
 COPY --from=build /app/dist /usr/share/nginx/html
 
+# Copia imagem manualmente, se necessário
+# COPY src/components/images/logo-envite.svg /usr/share/nginx/html/assets/logo-envite.svg
+COPY src/components/images /usr/share/nginx/html/assets/images
+
+# Configuração do nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 80
