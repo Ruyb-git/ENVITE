@@ -31,6 +31,7 @@ router.register(r'events', event_views.EventViewSet, basename='event')
 urlpatterns = [
     path('admin/', admin.site.urls),
     
+    
     path('user/auth/', include('dj_rest_auth.urls')),
     path('user/me/', user_views.Me.as_view()),
     path('user/register/', user_views.RegisterView.as_view()),

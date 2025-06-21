@@ -11,8 +11,9 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { Search } from "lucide-react";
 import toast from "react-hot-toast";
+// import { CalendarDays, Clock } from "lucide-react";
 
-// Fix for Leaflet icon missing issue
+// Corrigir o problema do ícone de folheto em falta
 import markerIcon from "leaflet/dist/images/marker-icon.png";
 import markerIconRetina from "leaflet/dist/images/marker-icon-2x.png";
 import markerShadow from "leaflet/dist/images/marker-shadow.png";
@@ -231,6 +232,7 @@ const EventForm: React.FC<EventFormProps> = ({
             <Input
               type="date"
               label="Data do Evento"
+              // icon={<CalendarDays size={18} />} ICONE CRIADO POR MIM MESMO
               error={errors.event_date?.message}
               {...field}
             />
@@ -244,6 +246,7 @@ const EventForm: React.FC<EventFormProps> = ({
             <Input
               type="time"
               label="Horário"
+              // icon={<Clock size={18} />}
               error={errors.event_time?.message}
               {...field}
             />

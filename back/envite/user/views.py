@@ -15,7 +15,7 @@ from .models import User
 )
 class Me(generics.GenericAPIView):
 	"""
-	Returns or updates the logged user data.
+	Retorna ou atualiza os dados utilizados no registro.
 	"""
 	permission_classes = [IsAuthenticated]
 	serializer_class = MeSerializer
@@ -67,7 +67,7 @@ class RegisterView(generics.CreateAPIView):
 )
 class AvatarUpdateView(generics.GenericAPIView):
 	"""
-	Updates the avatar of the logged user.
+	Atualiza o avatar.
 	"""
 	permission_classes = [IsAuthenticated]
 	serializer_class = AvatarSerializer

@@ -1,3 +1,6 @@
+' faz a ponte entre os modelos Django e os dados que serão trocados com o cliente (front-end, mobile, etc.).'
+'Converter um objeto Python/Django (ex: um Usuario) em JSON → para envio em uma API.'
+
 from rest_framework import serializers
 from .models import User
 

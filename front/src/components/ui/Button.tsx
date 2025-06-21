@@ -25,9 +25,8 @@ const Button: React.FC<ButtonProps> = ({
       "bg-indigo-600 text-white hover:bg-indigo-700 focus:ring-indigo-500",
     secondary: "bg-teal-600 text-white hover:bg-teal-700 focus:ring-teal-500",
     outline:
-      "bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-indigo-500",
-    ghost:
-      "bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-indigo-500",
+      "bg-transparent border border-gray-300 text-white hover:bg-gray-50 hover:text-[#434343] focus:ring-indigo-500",
+    ghost: "bg-transparent text-white hover:bg-gray-100 focus:ring-indigo-500",
     danger: "bg-red-600 text-white hover:bg-red-700 focus:ring-red-500",
   };
 

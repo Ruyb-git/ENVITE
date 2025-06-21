@@ -5,3 +5,16 @@
 body {
   @apply font-sans;
 }
+
+/* Ocultar ícones nativos de date/time
+.remove-native-icon::-webkit-calendar-picker-indicator {
+  opacity: 0;
+  display: none;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+
+.remove-native-icon::-webkit-inner-spin-button {
+  display: none;
+} */
