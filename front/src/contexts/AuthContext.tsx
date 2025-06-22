@@ -37,10 +37,10 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (token) {
         try {
           // Verify token is valid
-          await api.post("/api/v1/user/auth/token/verify/", { token });
+          await api.post("/v1/user/auth/token/verify/", { token });
 
           // Get user data
-          const response = await api.get("/api/v1/user/me/");
+          const response = await api.get("/v1/user/me/");
           setUser(response.data);
         } catch (error) {
           localStorage.removeItem("accessToken");
@@ -57,14 +57,14 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const login = async (data: LoginFormData) => {
     try {
       setLoading(true);
-      const response = await api.post("/api/v1/user/auth/login/", data);
+      const response = await api.post("/v1/user/auth/login/", data);
       const { access, refresh, user } = response.data;
 
       localStorage.setItem("accessToken", access);
       localStorage.setItem("refreshToken", refresh);
 
       // Get more detailed user info
-      const userResponse = await api.get("/api/v1/user/me/");
+      const userResponse = await api.get("/v1/user/me/");
       setUser(userResponse.data);
 
       navigate("/");
@@ -80,7 +80,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   const logout = async () => {
     try {
       setLoading(true);
-      await api.post("/api/v1/user/auth/logout/");
+      await api.post("/v1/user/auth/logout/");
       localStorage.removeItem("accessToken");
       localStorage.removeItem("refreshToken");
       setUser(null);
