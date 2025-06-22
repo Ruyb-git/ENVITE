@@ -37,7 +37,7 @@ const EventDetailPage: React.FC = () => {
   const fetchEvent = async () => {
     try {
       setLoading(true);
-      const response = await api.get<Event>(`/api/v1/events/${id}/`);
+      const response = await api.get<Event>(`/v1/events/${id}/`);
       setEvent(response.data);
     } catch (error) {
       console.error("Ocorreu um erro ao obter o evento:", error);
@@ -59,7 +59,7 @@ const EventDetailPage: React.FC = () => {
 
     try {
       setFormLoading(true);
-      await api.patch(`/api/v1/events/${id}/`, formData, {
+      await api.patch(`/v1/events/${id}/`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -79,7 +79,7 @@ const EventDetailPage: React.FC = () => {
     if (!id) return;
 
     try {
-      await api.delete(`/api/v1/events/${id}/`);
+      await api.delete(`/v1/events/${id}/`);
       toast.success('"Evento deletado com sucesso"; ::!');
       navigate("/");
     } catch (error) {
@@ -94,10 +94,10 @@ const EventDetailPage: React.FC = () => {
     try {
       setJoinLeaveLoading(true);
       if (event.i_will_join) {
-        await api.post(`/api/v1/events/${id}/leave/`);
+        await api.post(`/v1/events/${id}/leave/`);
         toast.success("Saiu do evento");
       } else {
-        await api.post(`/api/v1/events/${id}/join/`);
+        await api.post(`/v1/events/${id}/join/`);
         toast.success("Juntou-se ao evento");
       }
       fetchEvent();

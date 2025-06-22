@@ -1,8 +1,7 @@
-version: "3.8"
-
 services:
   db:
     container_name: db
+    hostname: db
     image: postgres:16-alpine
     restart: always
     environment:
@@ -10,6 +9,8 @@ services:
       POSTGRES_PASSWORD: admin
       POSTGRES_DB: envite
       TZ: GMT-3
+    ports:
+      - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
       - ./ddl.sql:/docker-entrypoint-initdb.d/1.sql:ro
@@ -19,16 +20,18 @@ services:
   backend:
     build:
       context: ./back
+      dockerfile: Dockerfile
     env_file:
       - .env
-    volumes:
-      - ./back:/app
-    working_dir: /app
     command: >
       sh -c "python manage.py migrate &&
              gunicorn envite.wsgi:application --bind 0.0.0.0:8000"
-    expose:
-      - "8000"
+    volumes:
+      - ./back:/app
+    working_dir: /app
+    container_name: backend
+    ports:
+      - "8000:8000"
     depends_on:
       - db
     networks:
@@ -37,39 +40,14 @@ services:
   frontend:
     build:
       context: ./front
+      dockerfile: Dockerfile
       args:
-        VITE_API_URL: http://165.227.123.45/api
+        VITE_API_URL: "http://localhost:8000"
     container_name: frontend
-    expose:
-      - "80"
-    depends_on:
-      - backend
-    networks:
-      - datanodes-network
-
-  nginx:
-    image: nginx:latest
-    container_name: nginx
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/certbot/www:/var/www/certbot
-      - ./nginx/certbot/conf:/etc/letsencrypt
+      - "3000:80"
     depends_on:
-      - frontend
       - backend
-    networks:
-      - datanodes-network
-
-  certbot:
-    image: certbot/certbot
-    container_name: certbot
-    volumes:
-      - ./nginx/certbot/www:/var/www/certbot
-      - ./nginx/certbot/conf:/etc/letsencrypt
-    command: certonly --webroot --webroot-path=/var/www/certbot --email seu-email@dominio.com --agree-tos --no-eff-email -d envite.com.br
     networks:
       - datanodes-network
 

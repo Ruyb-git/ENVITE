@@ -21,12 +21,12 @@ const ProfilePage: React.FC = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await api.patch("/api/v1/user/me/", { name: newName });
+      await api.patch("/v1/user/me/", { name: newName });
       updateUserProfile({ ...user!, name: newName });
       setIsNameModalOpen(false);
-      toast.success("Name updated successfully");
+      toast.success("Atualizado com sucesso");
     } catch (error) {
-      toast.error("Failed to update name");
+      toast.error("Falha ao atualizar o nome");
     } finally {
       setIsLoading(false);
     }
@@ -36,12 +36,12 @@ const ProfilePage: React.FC = () => {
     e.preventDefault();
     try {
       setIsLoading(true);
-      await api.patch("/api/v1/user/me/", { bio: newBio });
+      await api.patch("/v1/user/me/", { bio: newBio });
       updateUserProfile({ ...user!, bio: newBio });
       setIsBioModalOpen(false);
-      toast.success("Bio updated successfully");
+      toast.success("Atualizado com sucesso");
     } catch (error) {
-      toast.error("Failed to update bio");
+      toast.error("Falha ao atualizar a biografia");
     } finally {
       setIsLoading(false);
     }
@@ -56,15 +56,15 @@ const ProfilePage: React.FC = () => {
 
     try {
       setIsLoading(true);
-      const response = await api.patch("/api/v1/user/me/avatar", formData, {
+      const response = await api.patch("/v1/user/me/avatar", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
       updateUserProfile({ ...user!, avatar: response.data.avatar });
-      toast.success("Profile picture updated successfully");
+      toast.success("Imagem de perfil atualizada com sucesso!");
     } catch (error) {
-      toast.error("Failed to update profile picture");
+      toast.error("Falha ao atualizar perfil");
     } finally {
       setIsLoading(false);
     }

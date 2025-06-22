@@ -45,7 +45,7 @@ const RegisterPage: React.FC = () => {
     try {
       setLoading(true);
       setErrors({});
-      await api.post("/api/v1/user/register/", data);
+      await api.post("/v1/user/register/", data);
       toast.success("Registro bem-sucedido! Inicie sessão.");
       navigate("/login");
     } catch (error: any) {

@@ -44,7 +44,7 @@ const HomePage: React.FC = () => {
         setLoadingMore(true);
       }
 
-      const response = await api.get<PaginatedEvents>("/api/v1/events/", {
+      const response = await api.get<PaginatedEvents>("/v1/events/", {
         params: {
           page: pageNum,
           size: 10,
@@ -80,7 +80,7 @@ const HomePage: React.FC = () => {
   const handleCreateEvent = async (formData: FormData) => {
     try {
       setFormLoading(true);
-      await api.post("/api/v1/events/", formData, {
+      await api.post("/v1/events/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -115,11 +115,11 @@ const HomePage: React.FC = () => {
           <div className="animate-spin h-8 w-8 border-4 border-indigo-500 border-t-transparent rounded-full"></div>
         </div>
       ) : events.length === 0 ? (
-        <div className="bg-white rounded-lg shadow-md p-8 text-center">
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
+        <div className="bg-[#2F2F2F] rounded-lg shadow-md p-8 text-center">
+          <h3 className="text-lg font-medium text-white mb-2">
             Nenhum evento encontrado
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-400 mb-4">
             Não existem eventos criados de momento.
           </p>
           <Button onClick={() => setIsModalOpen(true)}>Criar um evento</Button>

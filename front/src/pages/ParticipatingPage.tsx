@@ -45,7 +45,7 @@ const ParticipatingPage: React.FC = () => {
       }
 
       const response = await api.get<PaginatedEvents>(
-        "/api/v1/events/participating/",
+        "/v1/events/participating/",
         {
           params: {
             page: pageNum,
@@ -83,7 +83,7 @@ const ParticipatingPage: React.FC = () => {
   const handleCreateEvent = async (formData: FormData) => {
     try {
       setFormLoading(true);
-      await api.post("/api/v1/events/", formData, {
+      await api.post("/v1/events/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

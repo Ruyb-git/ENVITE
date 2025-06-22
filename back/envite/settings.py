@@ -11,22 +11,25 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
+# Configurações de desenvolvimento de início rápido - inadequadas para produção
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2#m=tnuxp_t&oz3)e(s+reb^e60^y#89j-#m&i$sif=j_^7ps*'
+
+
+
+SECRET_KEY = config("SECRET_KEY")
 API_VERSION = "v1"
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# SECURITY AVISO: não execute com a depuração ativada na produção!
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = config("DJANGO_ALLOWED_HOSTS", default="").split(",")
 
 
 # Application definition
@@ -224,8 +227,8 @@ REST_AUTH = {
 #     'USE_JWT': True,
 #     # 'LOGIN_SERIALIZER': 'envite.user.serializer.CustomJWTSerializer',
 # }
-LOGIN_URL = '/api/{}/user/auth/login'.format(API_VERSION)
-LOGOUT_URL = '/api/{}/user/auth/logout'.format(API_VERSION)
+LOGIN_URL = '/{}/user/auth/login'.format(API_VERSION)
+LOGOUT_URL = '/{}/user/auth/logout'.format(API_VERSION)
 
 HASHID_FIELD_SALT = '^rmb8(et+qg&j5vec6e^aqvwsd%)&9hc7r-*c!62*y^ts(&(s_'
 
