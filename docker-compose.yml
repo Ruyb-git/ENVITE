@@ -73,12 +73,6 @@ services:
       - "80:80"
     depends_on:
       - backend
-    volumes:
-      - ./back/event_banners:/usr/share/nginx/event_banners:ro
-      - ./back/avatar:/usr/share/nginx/avatar:ro
-      - ./nginx/conf.d:/etc/nginx/conf.d:ro
-      - ./nginx/certbot/www:/var/www/certbot
-      - ./nginx/certbot/conf:/etc/letsencrypt
     networks:
       - datanodes-network
 
