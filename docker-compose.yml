@@ -47,18 +47,31 @@ services:
     networks:
       - datanodes-network
 
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   volumes:
+  #     - ./nginx/conf.d:/etc/nginx/conf.d
+  #     - ./nginx/certbot/www:/var/www/certbot
+  #     - ./nginx/certbot/conf:/etc/letsencrypt
+  #   depends_on:
+  #     - frontend
+  #     - backend
+  #   networks:
+  #     - datanodes-network
+
   nginx:
-    image: nginx:latest
-    container_name: nginx
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+      args:
+        VITE_API_URL: "http://68.183.23.188/api"
     ports:
       - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/certbot/www:/var/www/certbot
-      - ./nginx/certbot/conf:/etc/letsencrypt
     depends_on:
-      - frontend
       - backend
     networks:
       - datanodes-network
