@@ -47,22 +47,6 @@ services:
     networks:
       - datanodes-network
 
-  # nginx:
-  #   image: nginx:latest
-  #   container_name: nginx
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   volumes:
-  #     - ./nginx/conf.d:/etc/nginx/conf.d
-  #     - ./nginx/certbot/www:/var/www/certbot
-  #     - ./nginx/certbot/conf:/etc/letsencrypt
-  #   depends_on:
-  #     - frontend
-  #     - backend
-  #   networks:
-  #     - datanodes-network
-
   nginx:
     build:
       context: .
@@ -78,42 +62,42 @@ services:
     volumes:
       - ./back/avatar:/media/avatar
       - ./back/event_banners:/media/event_banners
-      - web-root:/var/www/html
-      - ./nginx-conf:/etc/nginx/conf.d
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-
-  # certbot:
-  #   image: certbot/certbot
-  #   container_name: certbot
-  #   volumes:
-  #     - ./nginx/certbot/www:/var/www/certbot
-  #     - ./nginx/certbot/conf:/etc/letsencrypt
-  #   command: certonly --webroot --webroot-path=/var/www/certbot --email seu-email@dominio.com --agree-tos --no-eff-email -d envite.com.br
-  #   networks:
-  #     - datanodes-network
+      # - web-root:/var/www/html
+      # - ./nginx-conf:/etc/nginx/conf.d
+      # - certbot-etc:/etc/letsencrypt
+      # - certbot-var:/var/lib/letsencrypt
 
   certbot:
     image: certbot/certbot
     container_name: certbot
     volumes:
-      - certbot-etc:/etc/letsencrypt
-      - certbot-var:/var/lib/letsencrypt
-      - web-root:/var/www/html
-    depends_on:
-      - nginx
-    command: certonly --webroot --webroot-path=/var/www/html --email rubenilsondesousa@gmail.com --agree-tos --no-eff-email --staging -d envite.com.br  -d www.envite.com.br
+      - ./nginx/certbot/www:/var/www/certbot
+      - ./nginx/certbot/conf:/etc/letsencrypt
+    command: certonly --webroot --webroot-path=/var/www/certbot --email seu-email@dominio.com --agree-tos --no-eff-email -d envite.com.br
+    networks:
+      - datanodes-network
+
+  # certbot:
+  #   image: certbot/certbot
+  #   container_name: certbot
+  #   volumes:
+  #     - certbot-etc:/etc/letsencrypt
+  #     - certbot-var:/var/lib/letsencrypt
+  #     - web-root:/var/www/html
+  #   depends_on:
+  #     - nginx
+  #   command: certonly --webroot --webroot-path=/var/www/html --email rubenilsondesousa@gmail.com --agree-tos --no-eff-email --staging -d envite.com.br  -d www.envite.com.br
 
 volumes:
   db-data:
-  certbot-etc:
-  certbot-var:
-  web-root:
-    driver: local
-    driver_opts:
-      type: none
-      device: /root/ENVITE/certbot-webroot
-      o: bind
+  # certbot-etc:
+  # certbot-var:
+  # web-root:
+  #   driver: local
+  #   driver_opts:
+  #     type: none
+  #     device: /root/ENVITE/certbot-webroot
+  #     o: bind
 
 networks:
   datanodes-network:
