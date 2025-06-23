@@ -75,6 +75,9 @@ services:
       - backend
     networks:
       - datanodes-network
+    volumes:
+      - ./back/avatar:/media/avatar
+      - ./back/event_banners:/media/event_banners
 
   certbot:
     image: certbot/certbot
