@@ -88,28 +88,28 @@ const Navbar: React.FC = () => {
               className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-indigo-600 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
-              Events
+              Eventos
             </Link>
             <Link
               to="/my-events"
               className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-indigo-600 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
-              My Events
+              Meus Eventos
             </Link>
             <Link
               to="/participating"
               className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-indigo-600 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
-              Participating
+              Participante
             </Link>
             <Link
               to="/me"
               className="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-indigo-600 hover:bg-gray-50"
               onClick={() => setIsMenuOpen(false)}
             >
-              Profile
+              Perfil
             </Link>
             <button
               onClick={() => {
