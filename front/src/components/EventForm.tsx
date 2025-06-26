@@ -289,7 +289,7 @@ const EventForm: React.FC<EventFormProps> = ({
         control={control}
         render={({ field: { onChange, value, ...field } }) => (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-200 mb-1">
               Banners de eventos (até 5 imagens)
             </label>
             <input
@@ -315,14 +315,14 @@ const EventForm: React.FC<EventFormProps> = ({
       />
 
       <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
+        <label className="block text-sm font-medium text-gray-200 mb-1">
           Localização do Evento
         </label>
 
         <div className="mb-2">
           <div className="flex gap-2">
             <Input
-              placeholder="Search for an address..."
+              placeholder="Pesquisar endereço…"
               value={searchAddress}
               onChange={(e) => setSearchAddress(e.target.value)}
               onKeyDown={(e) => {
@@ -336,7 +336,7 @@ const EventForm: React.FC<EventFormProps> = ({
             <Button
               onClick={handleAddressSearch}
               isLoading={searchLoading}
-              className="flex items-center "
+              className="flex items-center"
               type="button"
             >
               <Search size={18} className="mr-2" />
@@ -365,14 +365,14 @@ const EventForm: React.FC<EventFormProps> = ({
         </div>
         {(errors.latitude || errors.longitude) && (
           <p className="mt-1 text-sm text-red-600">
-            Seleccione uma localização no mapa
+            Selecione uma localização no mapa
           </p>
         )}
       </div>
 
       <div className="flex justify-end">
         <Button type="submit" isLoading={isLoading}>
-          {initialData ? "Update Event" : "Criar Evento"}
+          {initialData ? "Atualizar Evento" : "Criar Evento"}
         </Button>
       </div>
     </form>

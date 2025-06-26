@@ -200,7 +200,7 @@ const ProfilePage: React.FC = () => {
             label="Bio"
             value={newBio}
             onChange={(e) => setNewBio(e.target.value)}
-            placeholder="Tell us about yourself"
+            placeholder="Conte-nos sobre você"
             rows={4}
           />
           <div className="mt-4 flex justify-end gap-2">

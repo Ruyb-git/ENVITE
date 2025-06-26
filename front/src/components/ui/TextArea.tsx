@@ -28,7 +28,7 @@ const TextArea: React.FC<TextAreaProps> = ({
       <textarea
         id={textareaId}
         className={`
-          block w-full px-3 py-2 border rounded-md text-white bg-[#3E3F40] shadow-sm placeholder-gray-400
+          block w-full px-3 py-2 border rounded-md text-gray-400 bg-[#3E3F40] shadow-sm placeholder-gray-400
           focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm
           ${error ? "border-red-500" : "border-gray-600"}
           ${className}

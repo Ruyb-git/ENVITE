@@ -23,7 +23,9 @@ const Navbar: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center ">
-            <img className="w-40 h-auto " src={logo} alt="logo Envite" />
+            <Link to="/">
+              <img className="w-40 h-auto " src={logo} alt="logo Envite" />
+            </Link>
           </div>
 
           {/* Desktop Menu */}

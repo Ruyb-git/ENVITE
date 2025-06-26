@@ -99,68 +99,73 @@ const HomePage: React.FC = () => {
 
   return (
     <MainLayout>
-      <div className=" bg-[#1E1E1E] flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-white">Todos os eventos</h1>
-        <Button
-          onClick={() => setIsModalOpen(true)}
-          className="flex items-center"
+      {/* para evitar o bug da barra de pesquisa do mobile */}
+      <div className="min-h-[100dvh] bg-[#1E1E1E]">
+        <div className=" bg-[#1E1E1E] flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold text-white">Todos os eventos</h1>
+          <Button
+            onClick={() => setIsModalOpen(true)}
+            className="flex items-center"
+          >
+            <PlusCircle size={18} className="mr-2" />
+            Criar Evento
+          </Button>
+        </div>
+
+        {loading && events.length === 0 ? (
+          <div className="flex items-center justify-center h-64">
+            <div className="animate-spin h-8 w-8 border-4 border-indigo-500 border-t-transparent rounded-full"></div>
+          </div>
+        ) : events.length === 0 ? (
+          <div className="bg-[#2F2F2F] rounded-lg shadow-md p-8 text-center">
+            <h3 className="text-lg font-medium text-white mb-2">
+              Nenhum evento encontrado
+            </h3>
+            <p className="text-gray-400 mb-4">
+              Não existem eventos criados de momento.
+            </p>
+            <Button onClick={() => setIsModalOpen(true)}>
+              Criar um evento
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+            {events.map((event, index) => (
+              <div
+                key={event.id}
+                ref={
+                  index === events.length - 1 ? lastEventElementRef : undefined
+                }
+              >
+                <EventCard event={event} />
+              </div>
+            ))}
+            {loadingMore && (
+              <div className="col-span-full flex justify-center py-4">
+                <div className="animate-spin h-8 w-8 border-4 border-indigo-500 border-t-transparent rounded-full"></div>
+              </div>
+            )}
+          </div>
+        )}
+
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          title="Criar um evento"
+          size="lg"
         >
-          <PlusCircle size={18} className="mr-2" />
-          Criar Evento
-        </Button>
-      </div>
+          <EventForm onSubmit={handleCreateEvent} isLoading={formLoading} />
+        </Modal>
 
-      {loading && events.length === 0 ? (
-        <div className="flex items-center justify-center h-64">
-          <div className="animate-spin h-8 w-8 border-4 border-indigo-500 border-t-transparent rounded-full"></div>
+        {/* Botão de ação flutuante para dispositivos móveis */}
+        <div className="md:hidden fixed bottom-6 right-6">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-4 shadow-lg transition-colors"
+          >
+            <PlusCircle size={24} />
+          </button>
         </div>
-      ) : events.length === 0 ? (
-        <div className="bg-[#2F2F2F] rounded-lg shadow-md p-8 text-center">
-          <h3 className="text-lg font-medium text-white mb-2">
-            Nenhum evento encontrado
-          </h3>
-          <p className="text-gray-400 mb-4">
-            Não existem eventos criados de momento.
-          </p>
-          <Button onClick={() => setIsModalOpen(true)}>Criar um evento</Button>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-          {events.map((event, index) => (
-            <div
-              key={event.id}
-              ref={
-                index === events.length - 1 ? lastEventElementRef : undefined
-              }
-            >
-              <EventCard event={event} />
-            </div>
-          ))}
-          {loadingMore && (
-            <div className="col-span-full flex justify-center py-4">
-              <div className="animate-spin h-8 w-8 border-4 border-indigo-500 border-t-transparent rounded-full"></div>
-            </div>
-          )}
-        </div>
-      )}
-
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        title="Criar um evento"
-        size="lg"
-      >
-        <EventForm onSubmit={handleCreateEvent} isLoading={formLoading} />
-      </Modal>
-
-      {/* Botão de ação flutuante para dispositivos móveis */}
-      <div className="md:hidden fixed bottom-6 right-6">
-        <button
-          onClick={() => setIsModalOpen(true)}
-          className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full p-4 shadow-lg transition-colors"
-        >
-          <PlusCircle size={24} />
-        </button>
       </div>
     </MainLayout>
   );

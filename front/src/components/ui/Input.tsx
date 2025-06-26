@@ -11,7 +11,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputId = id || `input-${Math.random().toString(36).substr(2, 9)}`;
 
     return (
-      <div className="mb-4">
+      <div className="">
         {label && (
           <label
             htmlFor={inputId}
@@ -25,7 +25,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           className={`
             block w-full px-3 py-2 border rounded-md bg-[#3E3F40]  placeholder-gray-400
-            focus:outline-none focus:ring-indigo-500 text-white focus:border-indigo-500 sm:text-sm
+            focus:outline-none focus:ring-indigo-500 text-gray-400 focus:border-indigo-500 sm:text-sm
             ${error ? "border-red-500" : "border-[#434343]"}
             ${className}
           `}

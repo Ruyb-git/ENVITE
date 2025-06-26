@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import { Calendar, Clock, MapPin, Users } from "lucide-react";
 import { Event } from "../types";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 
 interface EventCardProps {
   event: Event;
 }
 
 const EventCard: React.FC<EventCardProps> = ({ event }) => {
-  const formattedDate = format(new Date(event.event_date), "PPP");
+  const formattedDate = format(new Date(event.event_date), "PPP", {
+    locale: ptBR,
+  });
 
   return (
     <div className="bg-[#2F2F2F] rounded-lg shadow-md overflow-hidden transition-all hover:shadow-lg h-full flex flex-col">

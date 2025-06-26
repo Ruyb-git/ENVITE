@@ -19,6 +19,7 @@ import EventForm from "../components/EventForm";
 import api from "../utils/api";
 import { Event } from "../types";
 import { format } from "date-fns";
+import { ptBR } from "date-fns/locale";
 import { MapContainer, TileLayer, Marker } from "react-leaflet";
 import toast from "react-hot-toast";
 import "leaflet/dist/leaflet.css";
@@ -151,7 +152,9 @@ const EventDetailPage: React.FC = () => {
     );
   }
 
-  const formattedDate = format(new Date(event.event_date), "PPP");
+  const formattedDate = format(new Date(event.event_date), "PPP", {
+    locale: ptBR,
+  });
 
   return (
     <MainLayout>
