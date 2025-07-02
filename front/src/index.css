@@ -4,6 +4,8 @@
 
 body {
   @apply font-sans;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* Ocultar ícones nativos de date/time

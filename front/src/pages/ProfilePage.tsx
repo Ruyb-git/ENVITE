@@ -124,7 +124,7 @@ const ProfilePage: React.FC = () => {
                 <div className="mt-4">
                   <div className="flex items-center justify-center gap-2">
                     <p className="text-[#8b8b8b]">
-                      {user?.bio || "No bio yet"}
+                      {user?.bio || "Adicione sua bio"}
                     </p>
                     <button
                       onClick={() => setIsBioModalOpen(true)}

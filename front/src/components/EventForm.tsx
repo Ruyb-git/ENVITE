@@ -34,11 +34,11 @@ const ACCEPTED_IMAGE_TYPES = [
 ];
 
 const eventSchema = z.object({
-  title: z.string().min(3, "Title must be at least 3 characters"),
-  description: z.string().min(10, "Description must be at least 10 characters"),
-  event_date: z.string().min(1, "Event date is required"),
-  event_time: z.string().min(1, "Event time is required"),
-  phone: z.string().min(8, "Valid phone number is required"),
+  title: z.string().min(3, "O título deve ter pelo menos 3 caracteres"),
+  description: z.string().min(10, "Deve ter pelo menos 10 caracteres."),
+  event_date: z.string().min(1, "A data do evento é obrigatória"),
+  event_time: z.string().min(1, "O horário do evento é obrigatória"),
+  phone: z.string().min(8, "Um número de telefone válido é obrigatório."),
   ticket_price: z.string().optional(),
   latitude: z.number(),
   longitude: z.number(),
@@ -47,12 +47,12 @@ const eventSchema = z.object({
     .optional()
     .refine(
       (files) => !files || files.length <= 5,
-      "Maximum of 5 images allowed"
+      "Máximo de 5 imagens permitidas"
     )
     .refine(
       (files) =>
         !files || Array.from(files).every((file) => file.size <= MAX_FILE_SIZE),
-      "Each file must be less than 5MB"
+      "Cada imagem deve ter menos de 5 MB"
     )
     .refine(
       (files) =>
@@ -60,7 +60,7 @@ const eventSchema = z.object({
         Array.from(files).every((file) =>
           ACCEPTED_IMAGE_TYPES.includes(file.type)
         ),
-      "Only .jpg, .jpeg, .png and .webp formats are supported"
+      "Apenas os formatos .jpg, .jpeg, .png e .webp são suportados"
     ),
 });
 
@@ -164,12 +164,12 @@ const EventForm: React.FC<EventFormProps> = ({
         const latitude = parseFloat(lat);
         const longitude = parseFloat(lon);
         handleLocationChange(latitude, longitude);
-        toast.success("Location found!");
+        toast.success("Localização encontrada!");
       } else {
-        toast.error("Location not found");
+        toast.error("Localização não encontrada");
       }
     } catch (error) {
-      toast.error("Error searching for location");
+      toast.error("Erro ao procurar a localização");
     } finally {
       setSearchLoading(false);
     }
